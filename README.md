@@ -36,7 +36,7 @@ How to Use:
         nano app.py
           #go to line 8, you should see
             BASE_DOWNLOAD_FOLDER = '/BASE/DIRECTORY/FOR/DOWNLOADS/'
-          #change '/BASE/DIRECTORY/FOR/DOWNLOADS/' to whatever path from the install you want
+          #change '/BASE/DIRECTORY/FOR/DOWNLOADS/' to whatever path from root you want
 
       #edit the index.html
         nano templates/index.html
@@ -84,7 +84,7 @@ How to Use:
         notepad app.py
           #go to line 8, you should see
             BASE_DOWNLOAD_FOLDER = '/BASE/DIRECTORY/FOR/DOWNLOADS/'
-          #change '/BASE/DIRECTORY/FOR/DOWNLOADS/' to whatever path from the install you want
+          #change '/BASE/DIRECTORY/FOR/DOWNLOADS/' to whatever path from the C drive you want
 
       #edit the index.html
         notepad templates/index.html
