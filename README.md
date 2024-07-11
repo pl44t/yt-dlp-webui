@@ -5,7 +5,8 @@ How to Use:
 
   Requirements:
     git, 
-    python or python3
+    python or python3,  
+    ffmpeg(needed for choosing video/audio quality and for conversion)
 
   Linux:
 
