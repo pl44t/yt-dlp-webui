@@ -8,6 +8,7 @@ How to Use:
     python or python3
 
   Linux:
+
     #navigate to your desired directory for the install
       cd path\to\your\desired\directory
 
@@ -51,6 +52,7 @@ How to Use:
 
 
   Windows:
+  
     #navigate to your desired directory for the install
       cd path\to\your\desired\directory
 
