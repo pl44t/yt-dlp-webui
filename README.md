@@ -17,18 +17,18 @@ How to Use:
       screen -S yt-dlp-webui
 
 
+    #clone the repo
+      git clone https://github.com/pl44t/yt-dlp-webui.git
+      cd yt-dlp-webui
+
+
     #setup a virtual environment named yt-dlp-webui
       python -m venv yt-dlp-webui |or| python3 -m venv yt-dlp-webui
       source venv/bin/activate
 
 
-    #install flask
-      pip install flask
-
-
-    #clone the repo
-      git clone https://github.com/pl44t/yt-dlp-webui.git
-      cd yt-dlp-webui
+    #install flaskand yt-dlp
+      pip install flask yt-dlp
 
 
     #edit the download paths
@@ -36,7 +36,7 @@ How to Use:
         nano app.py
           #go to line 8, you should see
             BASE_DOWNLOAD_FOLDER = '/BASE/DIRECTORY/FOR/DOWNLOADS/'
-          #change '/BASE/DIRECTORY/FOR/DOWNLOADS/' to whatever path you want
+          #change '/BASE/DIRECTORY/FOR/DOWNLOADS/' to whatever path from the install you want
 
       #edit the index.html
         nano templates/index.html
@@ -64,19 +64,19 @@ How to Use:
     #navigate to your desired directory for the install
       cd path\to\your\desired\directory
 
+      
+    #clone the repo
+      git clone https://github.com/pl44t/yt-dlp-webui.git
+      cd yt-dlp-webui
+
 
     #setup a virtual environment named yt-dlp-webui
       python -m venv yt-dlp-webui |or| python3 -m venv yt-dlp-webui
       yt-dlp-webui\Scripts\activate
 
 
-    #install flask
-      pip install flask
-
-
-    #clone the repo
-      git clone https://github.com/pl44t/yt-dlp-webui.git
-      cd yt-dlp-webui
+    #install flask and yt-dlp
+      pip install flask yt-dlp
 
 
     #edit the download paths
@@ -84,7 +84,7 @@ How to Use:
         notepad app.py
           #go to line 8, you should see
             BASE_DOWNLOAD_FOLDER = '/BASE/DIRECTORY/FOR/DOWNLOADS/'
-          #change '/BASE/DIRECTORY/FOR/DOWNLOADS/' to whatever path you want
+          #change '/BASE/DIRECTORY/FOR/DOWNLOADS/' to whatever path from the install you want
 
       #edit the index.html
         notepad templates/index.html
