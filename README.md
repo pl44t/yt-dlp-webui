@@ -4,7 +4,7 @@ A yt-dlp Webui using python and flask to create a site.
 How to Use:
 
   Requirements:
-    git
+    git, 
     python or python3
 
   Linux:
