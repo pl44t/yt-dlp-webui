@@ -14,7 +14,7 @@ How to Use:
       cd path\to\your\desired\directory
 
 
-    #setup a screen session in terminal to keep the process running
+    #setup a screen session in terminal to keep the process running(optional)
       screen -S yt-dlp-webui
 
 
@@ -25,7 +25,7 @@ How to Use:
 
     #setup a virtual environment named yt-dlp-webui
       python -m venv yt-dlp-webui |or| python3 -m venv yt-dlp-webui
-      source venv/bin/activate
+      source yt-dlp-webui/bin/activate
 
 
     #install flaskand yt-dlp
