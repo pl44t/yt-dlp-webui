@@ -2,8 +2,13 @@ A yt-dlp Webui using python and flask to create a site.
 
 
 How to Use:
+  Requirements for Windows App:
+    none - other than the downloaded zip from the releases tab.
+    install instructions inside.
+    have fun downloading!
+    
 
-  Requirements:
+  Requirements for install version:
     git, 
     python or python3,  
     ffmpeg(needed for choosing video/audio quality and for conversion)
