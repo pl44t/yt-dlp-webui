@@ -38,7 +38,16 @@ Clone the repo
 
 Setup a virtual environment named yt-dlp-webui
 ```bash
-   python -m venv yt-dlp-webui |or| python3 -m venv yt-dlp-webui
+python -m venv yt-dlp-webui
+```
+or depending on how your python is setup you may neeed to use 
+
+```bash
+python3 -m venv yt-dlp-webui
+```
+Then activate the environment
+
+```bash
   source yt-dlp-webui/bin/activate
 ```
 
