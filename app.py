@@ -5,7 +5,7 @@ import subprocess
 app = Flask(__name__)
 app.secret_key = 'supersecretkey'  # Necessary for flash messages
 
-BASE_DOWNLOAD_FOLDER = '/BASE/DIRECTORY/FOR/DOWNLOADS/'
+BASE_DOWNLOAD_FOLDER = '/media/fernfiles/media'
 os.makedirs(BASE_DOWNLOAD_FOLDER, exist_ok=True)
 
 def is_download_in_progress():
@@ -33,21 +33,24 @@ def download_video(url, subdir, params, quality, format, base_download_folder):
     if '--sponsorblock-remove all' in params:
         command.extend(['--sponsorblock-remove', 'all'])
     
-    if quality != 'best':
-        command.extend(['-f', f'bestvideo[height<={quality}]+bestaudio/bestvideo+bestaudio/best[height<={quality}]'])
+    if format == 'mp3':
+        command.extend(['-x', '--audio-format', 'mp3'])
     else:
-        command.extend(['-f', 'bestvideo+bestaudio'])
+        if quality != 'best':
+            command.extend(['-f', f'bestvideo[height<={quality}]+bestaudio/bestvideo+bestaudio/best[height<={quality}]'])
+        else:
+            command.extend(['-f', 'bestvideo+bestaudio'])
+        
+        if format == 'mkv':
+            command.extend(['--merge-output-format', 'mkv'])
+        elif format == 'avi':
+            command.extend(['--merge-output-format', 'avi'])
+        elif format == 'webm':
+            command.extend(['--merge-output-format', 'webm'])
+        # Default to mp4 if format is not specified or is mp4
+        # yt-dlp uses mp4 as default if no --merge-output-format is specified
     
     command.append(url)
-    
-    if format == 'mkv':
-        command.extend(['--merge-output-format', 'mkv'])
-    elif format == 'avi':
-        command.extend(['--merge-output-format', 'avi'])
-    elif format == 'webm':
-        command.extend(['--merge-output-format', 'webm'])
-    # Default to mp4 if format is not specified or is mp4
-    # yt-dlp uses mp4 as default if no --merge-output-format is specified
     
     # Execute the command
     try:
