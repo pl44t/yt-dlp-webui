@@ -1,9 +1,12 @@
 
 # Yt-dlp webui 
 
-version 2.1
-- better ui than previous versions
 A yt-dlp Webui using python and flask.
+
+version 2.1
+- better ui than previous versions.
+
+
 
 You can run the it using:
 - The portable Windows app 
@@ -13,9 +16,13 @@ You can run the it using:
 
 ### Windows
 
+##### You will Need:
+- python version 3.x
+- the python package "flask"
+
 - Head to the [Releases Tab](https://github.com/pl44t/yt-dlp-webui/releases) and look for the newest version of the Windows App.
 - Download and extract the zip file
-- Open the unzipped folder and run the app.exe 
+- Open the unzipped folder and run the app.py
 - A terminal will open and tell to head you to [localhost:5000](http://localhost:5000) in your web browser, there you can download your videos!
 
 
@@ -111,7 +118,7 @@ To exit the screen session in the terminal but keep it running in the background
   "d"
 ```
 
-and to resume for debugging
+And to resume:
 
 ```bash 
   screen -r yt-dlp-webui
