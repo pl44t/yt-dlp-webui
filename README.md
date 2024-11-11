@@ -1,6 +1,7 @@
 
 # Yt-dlp webui 
 
+Version 1.0
 A yt-dlp Webui using python and flask.
 
 You can run the it using:
