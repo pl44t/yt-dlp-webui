@@ -5,6 +5,11 @@
 
 A yt-dlp Webui using python and flask.
 
+version 2.1
+- better ui than previous versions.
+
+
+
 You can run the it using:
 - The portable Windows app 
 - Linux install
@@ -13,32 +18,38 @@ You can run the it using:
 
 ### Windows
 
+##### You will Need:
+- python version 3.x
+- the python package "flask"
+
+##### Install:
+
 - Head to the [Releases Tab](https://github.com/pl44t/yt-dlp-webui/releases) and look for the newest version of the Windows App.
 - Download and extract the zip file
-- Open the unzipped folder and run the app.exe 
+- Open the unzipped folder and run the app.py
 - A terminal will open and tell to head you to [localhost:5000](http://localhost:5000) in your web browser, there you can download your videos!
 
 
 ### Linux
 
-Navigate to your desired directory for the install
+1. **Navigate to your desired directory** for the install
 
 ```bash
   cd path\to\your\desired\directory
 ```
 
-Setup a screen session in terminal to keep the process running(optional)
+2. **Setup a screen session** in terminal to keep the process running(optional)
 ```bash
   screen -S yt-dlp-webui
 ```
 
-Clone the repo
+3. **Clone the repo**
 ```bash
   git clone https://github.com/pl44t/yt-dlp-webui.git
   cd yt-dlp-webui
 ```
 
-Setup a virtual environment named yt-dlp-webui
+4. **Setup a virtual environment** named yt-dlp-webui
 ```bash
 python -m venv yt-dlp-webui
 ```
@@ -47,47 +58,47 @@ or depending on how your python is setup you may neeed to use
 ```bash
 python3 -m venv yt-dlp-webui
 ```
-Then activate the environment
+5. **Then activate the environment**
 
 ```bash
   source yt-dlp-webui/bin/activate
 ```
 
-Install flask and yt-dlp to the python environment
+6. **Install flask and yt-dlp** to the python environment
 ```bash
   pip install flask yt-dlp
 ```
 
-#### Edit the download paths:
+ 7. **Edit the download paths**
 
-Edit the app.py file to download to the correct directory (use nano or any other editor)
-
-```bash
-  nano app.py
-```
-
-go to line 8, you should see
-
-```py
-  BASE_DOWNLOAD_FOLDER = '/BASE/DIRECTORY/FOR/DOWNLOADS/'
-```
-
-change '/BASE/DIRECTORY/FOR/DOWNLOADS/' to whatever path from root you want, for example:
-```py
-  '/media/Videos/YouTube/'
-```
-
-edit the index.html
-```bash
-  nano templates/index.html
-```
-
-on line 69 (nice)
-```html
-  <input type="text" class="form-control" id="subdir" name="subdir" placeholder="Enter subdirectory under /BASE/DIRECTORY/FOR/DOWNLOADS/">
-```
-
-Change the '/BASE/DIRECTORY/FOR/DOWNLOADS/' text to whatever directory you chose in the previous step, this text will show up in thetextbox in the webui where the user will optionally enter a subdirectory to download to.
+	1. Edit the app.py file to download to the correct directory (use nano or any other editor)
+	
+	```bash
+	  nano app.py
+	```
+	
+	2. Head to line 8, you should see
+	
+	```py
+	  BASE_DOWNLOAD_FOLDER = '/BASE/DIRECTORY/FOR/DOWNLOADS/'
+	```
+	
+	3. Change '/BASE/DIRECTORY/FOR/DOWNLOADS/' to whatever path from root you want, for example:
+	```py
+	  '/media/Videos/YouTube/'
+	```
+	
+	4. Edit the index.html
+	```bash
+	  nano templates/index.html
+	```
+	
+	5. On line 69 (nice)
+	```html
+	  <input type="text" class="form-control" id="subdir" name="subdir" placeholder="Enter subdirectory under /BASE/DIRECTORY/FOR/DOWNLOADS/">
+	```
+	
+	Change the '/BASE/DIRECTORY/FOR/DOWNLOADS/' text to whatever directory you chose in the previous step
 
 #### Running the webui
 
@@ -111,7 +122,7 @@ To exit the screen session in the terminal but keep it running in the background
   "d"
 ```
 
-and to resume for debugging
+And to resume:
 
 ```bash 
   screen -r yt-dlp-webui
