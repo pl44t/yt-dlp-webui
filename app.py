@@ -1,11 +1,20 @@
 from flask import Flask, render_template, request, redirect, url_for, send_file, flash
 import os
 import subprocess
+import json
 
 app = Flask(__name__)
 app.secret_key = 'supersecretkey'  # Necessary for flash messages
 
-BASE_DOWNLOAD_FOLDER = '/media/fernfiles/media'
+def load_config():
+    config_path = os.path.join(os.path.dirname(__file__), 'config.json')
+    if os.path.exists(config_path):
+        with open(config_path, 'r') as f:
+            return json.load(f)
+    return {"BASE_DOWNLOAD_FOLDER": "\\Users\\Public\\Downloads"}
+
+config = load_config()
+BASE_DOWNLOAD_FOLDER = config['BASE_DOWNLOAD_FOLDER']
 os.makedirs(BASE_DOWNLOAD_FOLDER, exist_ok=True)
 
 def is_download_in_progress():
@@ -43,10 +52,10 @@ def download_video(url, subdir, params, quality, format, base_download_folder):
         
         if format == 'mkv':
             command.extend(['--merge-output-format', 'mkv'])
-        elif format == 'avi':
-            command.extend(['--merge-output-format', 'avi'])
         elif format == 'webm':
             command.extend(['--merge-output-format', 'webm'])
+        elif format == 'mp4':
+            command.extend(['--merge-output-format', 'mp4']) # was having problems without this extra elif fpr mp4
         # Default to mp4 if format is not specified or is mp4
         # yt-dlp uses mp4 as default if no --merge-output-format is specified
     

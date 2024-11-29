@@ -1,24 +1,18 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Download Successful</title>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      background-color: #343a40;
-      color: white;
-    }
-    .container {
-      max-width: 600px;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1 class="mt-5">Download Successful</h1>
-    <a href="/" class="btn btn-primary mt-3">Go Back</a>
-  </div>
-</body>
-</html>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>Download Successful</title>
+      <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+      <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+    </head>
+    <body>
+      <div class="container">
+        <div class="success-message">
+          <h1 class="mt-5">Download Successful</h1>
+          <a href="/" class="btn btn-primary mt-3">Go Back</a>
+        </div>
+      </div>
+    </body>
+    </html>

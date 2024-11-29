@@ -1,99 +1,102 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>yt-dlp Web UI</title>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      background-color: #76453B; /* Classic Red */
-      color: #F8FAE5; /* Cream */
-    }
-    .container {
-      margin-top: 100px;
-      max-width: 600px;
-      background-color: #B19470; /* Classic Beige */
-      padding: 20px;
-      border-radius: 10px;
-    }
-    .form-group label {
-      color: #F8FAE5; /* Cream */
-    }
-    .form-control, .form-check-input, .btn {
-      background-color: #F8FAE5; /* Cream */
-      color: #76453B; /* Classic Red */
-      border: none;
-    }
-    .btn-primary {
-      background-color: #43766C; /* Classic Teal */
-      color: #F8FAE5; /* Cream */
-    }
-    .btn-primary:hover {
-      background-color: #35594F; /* Darker Teal on hover */
-    }
-    .form-control:focus, .form-check-input:focus {
-      border-color: #43766C; /* Classic Teal */
-      box-shadow: none;
-    }
-    .form-check-label {
-      color: #F8FAE5; /* Cream */
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1 class="mt-5">yt-dlp Web UI</h1>
-    <form action="/download" method="post" class="mt-3">
-      <div class="form-group">
-        <label for="url">Video URL</label>
-        <input type="url" class="form-control" id="url" name="url" placeholder="Enter video URL" required>
+    <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>yt-dlp Web UI</title>
+      <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+      <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+      <link href="{{ url_for('static', filename='checkboxes.css') }}" rel="stylesheet">
+    </head>
+    <body>
+      <div class="container">
+        <h1 class="mt-5">yt-dlp Web UI</h1>
+        <form action="/download" method="post" class="mt-3">
+          <div class="form-group">
+            <label for="url">Video URL</label>
+            <input type="url" class="form-control" id="url" name="url" placeholder="Enter video URL" required>
+          </div>
+          <div class="form-group" id="batch_urls_group" style="display: none;">
+            <label for="batch_urls">Batch URLs (one per line)</label>
+            <textarea class="form-control" id="batch_urls" name="batch_urls" rows="5" placeholder="Enter one URL per line"></textarea>
+          </div>
+          <div class="customCheckBoxHolder">
+            <input type="checkbox" id="batch" name="batch" class="customCheckBoxInput">
+            <label for="batch" class="customCheckBoxWrapper">
+              <div class="customCheckBox">
+                <div class="inner">Batch Mode</div>
+              </div>
+            </label>
+          </div>
+          <div class="form-row">
+            <div class="col">
+              <label for="quality">Video Quality</label>
+              <select class="form-control" id="quality" name="quality">
+                <option value="best">Best</option>
+                <option value="360">360p</option>
+                <option value="480">480p</option>
+                <option value="720">720p</option>
+                <option value="1080">1080p</option>
+                <option value="1440">1440p</option>
+                <option value="2160">4k</option>
+              </select>
+            </div>
+            <div class="col">
+              <label for="format">Video Format</label>
+              <select class="form-control" id="format" name="format">
+                <option value="mp4">MP4</option>
+                <option value="mkv">MKV</option>
+                <option value="webm">WEBM</option>
+                <option value="mp3">MP3 (Audio Only)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group mt-3">
+            <label for="subdir">Subdirectory</label>
+            <input type="text" class="form-control" id="subdir" name="subdir" placeholder="Enter subdirectory">
+          </div>
+          <div class="form-group">
+            <label for="params">Parameters</label><br>
+            <div class="customCheckBoxHolder">
+              <input type="checkbox" id="thumbnail" value="--write-thumbnail" name="params" class="customCheckBoxInput">
+              <label for="thumbnail" class="customCheckBoxWrapper">
+                <div class="customCheckBox">
+                  <div class="inner">Thumbnail</div>
+                </div>
+              </label>
+            </div>
+          
+            <div class="customCheckBoxHolder">
+              <input type="checkbox" id="subtitles" value="--write-sub --write-auto-sub --sub-lang en --sub-format srt --convert-subs srt" name="params" class="customCheckBoxInput">
+              <label for="subtitles" class="customCheckBoxWrapper">
+                <div class="customCheckBox">
+                  <div class="inner">Subtitles</div>
+                </div>
+              </label>
+            </div>
+          
+            <div class="customCheckBoxHolder">
+              <input type="checkbox" id="sponsorblock" value="--sponsorblock-remove all" name="params" class="customCheckBoxInput">
+              <label for="sponsorblock" class="customCheckBoxWrapper">
+                <div class="customCheckBox">
+                  <div class="inner">Sponsorblock</div>
+                </div>
+              </label>
+            </div>
+          </div>
+          <div style="display: flex; justify-content: center;">
+            <button type="submit" class="btn btn-primary checkbox-style">Download</button>
+          </div>
+        </form>
       </div>
-      <div class="form-row">
-        <div class="col">
-          <label for="quality">Video Quality</label>
-          <select class="form-control" id="quality" name="quality">
-            <option value="best">Best</option>
-            <option value="360">360p</option>
-            <option value="480">480p</option>
-            <option value="720">720p</option>
-            <option value="1080">1080p</option>
-            <option value="1440">1440p</option>
-            <option value="4k">4k</option>
-          </select>
-        </div>
-        <div class="col">
-          <label for="format">Video Format</label>
-          <select class="form-control" id="format" name="format">
-            <option value="mp4">MP4</option>
-            <option value="mkv">MKV</option>
-            <option value="avi">AVI</option>
-            <option value="webm">WEBM</option>
-            <option value="mp3">MP3 (Audio Only)</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group mt-3">
-        <label for="subdir">Subdirectory</label>
-        <input type="text" class="form-control" id="subdir" name="subdir" placeholder="Enter subdirectory">
-      </div>
-      <div class="form-group">
-        <label for="params">Parameters</label><br>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="--write-thumbnail" id="thumbnail" name="params">
-          <label class="form-check-label" for="thumbnail">Thumbnail</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="--write-sub --write-auto-sub --sub-lang en --sub-format srt --convert-subs srt" id="subtitles" name="params">
-          <label class="form-check-label" for="subtitles">Subtitles</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="--sponsorblock-remove all" id="sponsorblock" name="params">
-          <label class="form-check-label" for="sponsorblock">Sponsorblock</label>
-        </div>
-      </div>
-      <button type="submit" class="btn btn-primary">Download</button>
-    </form>
-  </div>
-</body>
-</html>
+      <script>
+        document.getElementById('batch').addEventListener('change', function() {
+          const isChecked = this.checked;
+          document.getElementById('url').parentElement.style.display = isChecked ? 'none' : 'block';
+          document.getElementById('batch_urls_group').style.display = isChecked ? 'block' : 'none';
+          document.getElementById('url').required = !isChecked;
+          document.getElementById('batch_urls').required = isChecked;
+        });
+      </script>
+    </body>
+    </html>

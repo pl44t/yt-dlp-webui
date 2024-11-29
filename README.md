@@ -1,5 +1,7 @@
 
 # Yt-dlp webui 
+#### Version 2.2
+	big ui update
 
 A yt-dlp Webui using python and flask.
 
