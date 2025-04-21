@@ -19,6 +19,49 @@ config = load_config()
 BASE_DOWNLOAD_FOLDER = config['BASE_DOWNLOAD_FOLDER']
 os.makedirs(BASE_DOWNLOAD_FOLDER, exist_ok=True)
 
+QUEUE_FILE = 'download_queue.json'
+
+def add_to_queue(job):
+    queue = []
+    if os.path.exists(QUEUE_FILE):
+        with open(QUEUE_FILE, 'r') as f:
+            queue = json.load(f)
+    queue.append(job)
+    with open(QUEUE_FILE, 'w') as f:
+        json.dump(queue, f)
+
+def get_next_job():
+    if not os.path.exists(QUEUE_FILE):
+        return None
+    with open(QUEUE_FILE, 'r') as f:
+        queue = json.load(f)
+    if not queue:
+        return None
+    next_job = queue.pop(0)
+    with open(QUEUE_FILE, 'w') as f:
+        json.dump(queue, f)
+    return next_job
+
+def process_queue():
+    while True:
+        job = get_next_job()
+        if not job:
+            break
+        start_download()
+        try:
+            download_video(
+                job['url'],
+                job['subdir'],
+                job['params'],
+                job['quality'],
+                job['format'],
+                BASE_DOWNLOAD_FOLDER
+            )
+        except Exception as e:
+            print(f'Error processing queued job: {str(e)}')
+        finally:
+            end_download()
+
 def is_download_in_progress():
     return os.path.exists('download.lock')
 
@@ -77,27 +120,51 @@ def index():
 
 @app.route('/download', methods=['POST'])
 def download():
-    if is_download_in_progress():
-        flash('A download is already in progress. Please wait until it is finished.')
-        return redirect(url_for('index'))
-    
-    start_download()
-    try:
-        urls = request.form.get('batch_urls', '').splitlines() if 'batch' in request.form else [request.form['url']]
-        subdir = request.form['subdir']
-        params = request.form.getlist('params')
-        quality = request.form['quality']
-        format = request.form['format']
-        
-        for url in urls:
-            if url.strip():
-                download_video(url, subdir, params, quality, format, BASE_DOWNLOAD_FOLDER)
-        
+    urls = request.form.get('batch_urls', '').splitlines() if 'batch' in request.form else [request.form['url']]
+    subdir = request.form['subdir']
+    params = request.form.getlist('params')
+    quality = request.form['quality']
+    format = request.form['format']
+
+    immediate_download_done = False  # track if we did a download right now
+
+    for url in urls:
+        if url.strip():
+            job = {
+                'url': url.strip(),
+                'subdir': subdir,
+                'params': params,
+                'quality': quality,
+                'format': format
+            }
+            if is_download_in_progress():
+                add_to_queue(job)
+                flash(f'Download for {url.strip()} was added to the queue.')
+            else:
+                start_download()
+                try:
+                    download_video(
+                        job['url'],
+                        job['subdir'],
+                        job['params'],
+                        job['quality'],
+                        job['format'],
+                        BASE_DOWNLOAD_FOLDER
+                    )
+                    flash(f'Download for {url.strip()} completed.')
+                    immediate_download_done = True
+                except Exception as e:
+                    flash(f'Error downloading {url.strip()}: {str(e)}')
+                finally:
+                    end_download()
+                    process_queue()
+
+    if immediate_download_done:
         return redirect(url_for('success'))
-    except Exception as e:
-        return str(e)
-    finally:
-        end_download()
+    else:
+        return redirect(url_for('index'))
+
+
 
 @app.route('/success')
 def success():
