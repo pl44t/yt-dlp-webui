@@ -54,6 +54,8 @@ def download_video(url, subdir, params, quality, format, base_download_folder):
             command.extend(['--merge-output-format', 'mkv'])
         elif format == 'webm':
             command.extend(['--merge-output-format', 'webm'])
+        elif format == 'avi':
+            command.extend(['--merge-output-format', 'avi'])
         elif format == 'mp4':
             command.extend(['--merge-output-format', 'mp4']) # was having problems without this extra elif fpr mp4
         # Default to mp4 if format is not specified or is mp4
