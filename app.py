@@ -11,6 +11,7 @@ def load_config():
     if os.path.exists(config_path):
         with open(config_path, 'r') as f:
             return json.load(f)
+    # if it cant find the BASE_DOWNLOAD_FOLDER in config.json then it just uses this at default:
     return {"BASE_DOWNLOAD_FOLDER": "\\Users\\Public\\Downloads"}
 
 config = load_config()
