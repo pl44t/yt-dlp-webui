@@ -1,10 +1,12 @@
-# V2.3
+# V2.4
 from flask import Flask, render_template, request, redirect, url_for, send_file, flash
+from flask_cors import CORS
 import os
 import subprocess
 import json
 
 app = Flask(__name__)
+CORS(app)
 app.secret_key = 'supersecretkey'  # Necessary for flash messages
 
 def load_config():
@@ -75,26 +77,34 @@ def end_download():
 def download_video(url, subdir, params, quality, format, base_download_folder):
     download_folder = os.path.join(base_download_folder, subdir.strip('/'))
     os.makedirs(download_folder, exist_ok=True)
-    
+
     command = ['yt-dlp']
-    
+
     if '--write-thumbnail' in params:
         command.append('--write-thumbnail')
-    
+
     if '--write-sub --write-auto-sub --sub-lang en --sub-format srt --convert-subs srt' in params:
         command.extend(['--write-sub', '--write-auto-sub', '--sub-lang', 'en', '--sub-format', 'srt', '--convert-subs', 'srt'])
-    
+
     if '--sponsorblock-remove all' in params:
         command.extend(['--sponsorblock-remove', 'all'])
-    
+
     if format == 'mp3':
-        command.extend(['-x', '--audio-format', 'mp3'])
+        command.extend([
+            '-x',
+            '--audio-format', 'mp3',
+            '--audio-quality', '0',
+            '--embed-metadata',
+            '--embed-thumbnail',
+            '--add-metadata',
+            '-o', '%(title)s.%(ext)s'
+        ])
     else:
         if quality != 'best':
             command.extend(['-f', f'bestvideo[height<={quality}]+bestaudio/bestvideo+bestaudio/best[height<={quality}]'])
         else:
             command.extend(['-f', 'bestvideo+bestaudio'])
-        
+
         if format == 'mkv':
             command.extend(['--merge-output-format', 'mkv'])
         elif format == 'webm':
@@ -102,17 +112,15 @@ def download_video(url, subdir, params, quality, format, base_download_folder):
         elif format == 'avi':
             command.extend(['--merge-output-format', 'avi'])
         elif format == 'mp4':
-            command.extend(['--merge-output-format', 'mp4']) # was having problems without this extra elif fpr mp4
-        # Default to mp4 if format is not specified or is mp4
-        # yt-dlp uses mp4 as default if no --merge-output-format is specified
-    
+            command.extend(['--merge-output-format', 'mp4'])
+
     command.append(url)
-    
-    # Execute the command
+
     try:
         subprocess.run(command, cwd=download_folder, check=True)
     except subprocess.CalledProcessError as e:
         return str(e)
+
 
 @app.route('/')
 def index():
